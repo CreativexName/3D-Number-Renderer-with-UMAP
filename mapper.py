@@ -27,7 +27,7 @@ def get_prime_hash_map(numbers):
         if is_prime(n):
             prime_hashmap_[n] = idx
             idx += 1
-    #
+
     return prime_hashmap_
 
 
@@ -35,19 +35,14 @@ def get_prime_hash_map(numbers):
 #
 def get_composite_number_factors(num, prime_hashmap_):
     factors_ = set()
-    #
     for prime in prime_hashmap_:
-        #
-        while not num % prime:
-            num //= prime
+        if prime * prime > num:
+            break
+        while num % prime == 0:
             factors_.add(prime)
-        #
-        if num == 1:
-            break
-        #
-        if num in prime_hashmap_:
-            factors_.add(num)
-            break
+            num //= prime
+    if num > 1:
+        factors_.add(num)
     return factors_
 
 
@@ -69,7 +64,7 @@ def fill_array(numbers, prime_hashmap_, factor_array_):
 
 if __name__ == '__main__':
     # amount of numbers
-    N = 10_000
+    N = 5_000_000
 
     # get all primes up to N
     prime_hashmap = get_prime_hash_map(N)
@@ -86,9 +81,9 @@ if __name__ == '__main__':
     n_neighbors = 15
     min_dist = 0.2
     n_components = 3
-    n_epochs = 500
+    n_epochs = 350
     metric = 'cosine'
-
+    print(1)
     # training
     map_data = umap.UMAP(
         metric=metric,
@@ -96,8 +91,9 @@ if __name__ == '__main__':
         n_components=n_components,
         n_neighbors=n_neighbors,
         min_dist=min_dist,
-        low_memory=True
+        low_memory=True,
+        n_jobs = 8
     ).fit_transform(factor_array)
-
+    print(2)
     # save result
     np.save(f'data/map_data_3d_{N}_{n_neighbors}_{str(min_dist).replace(".", "")}', map_data)

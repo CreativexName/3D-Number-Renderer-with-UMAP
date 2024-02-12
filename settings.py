@@ -9,9 +9,11 @@ DEPTH_SIZE = 24
 NUM_SAMPLES = 9
 
 WORLD_ROT_SPEED = 0.03
+WIDTH = 1280
+HEIGHT = 720
 
 # resolution
-WIN_RES = glm.ivec2(1280, 720)
+WIN_RES = glm.ivec2(WIDTH, HEIGHT)
 FPS_TARGET = 60
 
 # control keys
@@ -26,6 +28,7 @@ KEYS = {
     'WEAPON_1': pg.K_1,
     'WEAPON_2': pg.K_2,
     'WEAPON_3': pg.K_3,
+    'L_SHIFT': pg.K_LSHIFT 
 }
 
 # camera
@@ -37,7 +40,7 @@ NEAR = 0.1
 FAR = 2000.0
 PITCH_MAX = glm.radians(89)
 
-CAM_SPEED = 0.0045
+CAM_SPEED = 0.007
 CAM_ROT_SPEED = 0.0005
 INIT_CAM_POS = glm.vec3(8, 5, 43)
 INIT_CAM_YAW = -90

@@ -15,9 +15,14 @@ class Camera:
 
         self.m_proj = glm.perspective(V_FOV, ASPECT_RATIO, NEAR, FAR)
         self.m_view = glm.mat4()
+    def check_out_of_bounds(self):
+        mouse_x, mouse_y = pg.mouse.get_pos()
+        if mouse_x <= 30 or mouse_x >= WIDTH - 30 or mouse_y <= 30 or mouse_y >= HEIGHT - 30:
+            pg.mouse.set_pos(WIDTH//2, HEIGHT//2)
 
     def mouse_control(self):
         mouse_dx, mouse_dy = pg.mouse.get_rel()
+        
         if mouse_dx:
             self.rotate_yaw(delta_x=mouse_dx * MOUSE_SENSITIVITY)
         if mouse_dy:
@@ -29,24 +34,24 @@ class Camera:
         next_step = glm.vec3()
         #
         if key_state[KEYS['FORWARD']]:
-            next_step += self.move_forward(vel)
+            next_step += self.move_forward(vel * (2 if key_state[KEYS['L_SHIFT']] else 1))
         if key_state[KEYS['BACK']]:
-            next_step += self.move_back(vel)
+            next_step += self.move_back(vel * (2 if key_state[KEYS['L_SHIFT']] else 1))
         if key_state[KEYS['STRAFE_R']]:
-            next_step += self.move_right(vel)
+            next_step += self.move_right(vel * (2 if key_state[KEYS['L_SHIFT']] else 1))
         if key_state[KEYS['STRAFE_L']]:
-            next_step += self.move_left(vel)
+            next_step += self.move_left(vel * (2 if key_state[KEYS['L_SHIFT']] else 1))
         #
         if key_state[KEYS['UP']]:
-            self.move_up(vel)
+            self.move_up(vel * (2 if key_state[KEYS['L_SHIFT']] else 1))
         if key_state[KEYS['DOWN']]:
-            self.move_down(vel)
-        #
+            self.move_down(vel * (2 if key_state[KEYS['L_SHIFT']] else 1))        #
         self.position += next_step
 
     def update(self):
         self.keyboard_control()
         self.mouse_control()
+        self.check_out_of_bounds()
         #
         self.update_vectors()
         self.update_view_matrix()

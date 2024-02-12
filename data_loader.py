@@ -4,7 +4,7 @@ from numba import njit
 
 
 class DataLoader:
-    def __init__(self, data_path='data/map_data_3d_1000000_15_02.npy'):
+    def __init__(self, data_path='data/map_data_3d_10000_15_02.npy'):
         #
         self.point_positions = np.load(data_path)
         #
