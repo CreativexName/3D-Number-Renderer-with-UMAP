@@ -58,17 +58,18 @@ def fill_array(numbers, prime_hashmap_, factor_array_):
         for factor in factors:
             idx = prime_hashmap_[factor]
             factor_array_[n, idx] = 1
+    print(factor_array_)
     #
     return factor_array_
 
 
 if __name__ == '__main__':
     # amount of numbers
-    N = 5_000_000
+    N = 1000
 
     # get all primes up to N
     prime_hashmap = get_prime_hash_map(N)
-
+    print(len(prime_hashmap))
     # result array
     factor_array = scipy.sparse.lil_matrix((N, len(prime_hashmap)), dtype=np.int8)
 
